@@ -1,0 +1,13 @@
+{
+  "name": "ecommerce-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "server": "nodemon server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
