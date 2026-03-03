@@ -2,7 +2,7 @@ const express = require("express")
 const path = require("path")
 const cors = require("cors")
 const mongoose = require("mongoose")
-require("dotenv").config({ path: "./server/.env" })
+require("dotenv").config({ path: __dirname + "/.env" })
 
 const newsletterRoutes = require("./routes/newsletter")
 const productRoutes = require("./routes/productRoutes")
@@ -31,6 +31,10 @@ app.use("/api/orders", orderRoutes)
 // Serve uploaded images
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
+// ================= ROOT ROUTE =================
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
 // ================= DATABASE CONNECT =================
 const startServer = async () => {
   try {
