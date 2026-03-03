@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { FaTrash } from "react-icons/fa"
 import { useState } from "react"
 
+const API = import.meta.env.VITE_API_URL
+
 function Cart() {
 
   const navigate = useNavigate()
@@ -51,7 +53,6 @@ function Cart() {
       ) : (
         <div className="grid lg:grid-cols-3 gap-10">
 
-          {/* LEFT SIDE */}
           <div className="lg:col-span-2 space-y-6">
 
             {cartItems.map((item) => (
@@ -60,8 +61,9 @@ function Cart() {
                 className="bg-white p-6 rounded-xl shadow-sm flex flex-col md:flex-row gap-6"
               >
 
+                {/* ✅ FIXED IMAGE URL */}
                 <img
-                  src={`http://localhost:5000${item.image}`}
+                  src={`${API}${item.image}`}
                   alt={item.name}
                   className="w-28 h-28 object-cover rounded-lg"
                 />
@@ -115,10 +117,8 @@ function Cart() {
 
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="space-y-6">
 
-            {/* Coupon */}
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <h3 className="font-semibold mb-4">Have a coupon?</h3>
 
@@ -143,7 +143,6 @@ function Cart() {
               </p>
             </div>
 
-            {/* Order Summary */}
             <div className="bg-white p-6 rounded-xl shadow-sm">
 
               <h3 className="font-semibold mb-6 text-lg">
@@ -177,12 +176,12 @@ function Cart() {
                 <span>${finalTotal.toFixed(2)}</span>
               </div>
 
-             <button
-  onClick={() => navigate("/checkout")}
-  className="w-full mt-6 bg-black text-white py-3 rounded-md hover:bg-gray-800 transition"
->
-  Checkout
-</button>
+              <button
+                onClick={() => navigate("/checkout")}
+                className="w-full mt-6 bg-black text-white py-3 rounded-md hover:bg-gray-800 transition"
+              >
+                Checkout
+              </button>
 
             </div>
 

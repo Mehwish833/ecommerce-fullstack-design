@@ -3,6 +3,8 @@ import axios from "axios"
 import { useAuth } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 
+const API = import.meta.env.VITE_API_URL
+
 function AdminProducts() {
 
   const { user } = useAuth()
@@ -18,7 +20,7 @@ function AdminProducts() {
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/products"
+        `${API}/api/products`
       )
 
       setProducts(data)
@@ -35,7 +37,7 @@ function AdminProducts() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/products/${id}`,
+        `${API}/api/products/${id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`
@@ -55,7 +57,6 @@ function AdminProducts() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
 
-      {/* HEADER + ADD BUTTON */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">
           Manage Products
@@ -69,7 +70,6 @@ function AdminProducts() {
         </button>
       </div>
 
-      {/* TABLE */}
       <div className="overflow-x-auto bg-white shadow rounded-lg">
         <table className="w-full text-sm">
 

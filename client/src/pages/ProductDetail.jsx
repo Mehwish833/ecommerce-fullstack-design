@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { useCart } from "../context/CartContext"
 
+const API = import.meta.env.VITE_API_URL
+
 function ProductDetail() {
 
   const { id } = useParams()
@@ -23,7 +25,7 @@ function ProductDetail() {
       setLoading(true)
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/products/${id}`
+          `${API}/api/products/${id}`
         )
         setProduct(data)
         setError(null)
@@ -81,7 +83,6 @@ function ProductDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
 
-        {/* LEFT SIDE */}
         <div>
           <div className="relative bg-gray-100 rounded-xl overflow-hidden">
 
@@ -91,16 +92,15 @@ function ProductDetail() {
               </div>
             )}
 
-            {/* 🔥 Correct image path */}
+            {/* ✅ FIXED IMAGE URL */}
             <img
-              src={`http://localhost:5000${product.image}`}
+              src={`${API}${product.image}`}
               alt={product.name}
               className="w-full h-[500px] object-cover"
             />
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <div>
 
           <p className={`text-sm mb-2 ${
@@ -117,15 +117,12 @@ function ProductDetail() {
             {product.name}
           </h1>
 
-          {/* Rating (static placeholder) */}
           <div className="flex items-center gap-2 mt-3">
             <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
                 <FaStar
                   key={i}
-                  className={
-                    i < 4 ? "" : "text-gray-300"
-                  }
+                  className={i < 4 ? "" : "text-gray-300"}
                 />
               ))}
             </div>
@@ -134,7 +131,6 @@ function ProductDetail() {
             </span>
           </div>
 
-          {/* Price */}
           <div className="flex items-center gap-4 mt-6">
             <span className="text-3xl font-semibold text-black">
               ${product.price}
@@ -147,12 +143,10 @@ function ProductDetail() {
             )}
           </div>
 
-          {/* Description */}
           <p className="mt-6 text-gray-600 leading-relaxed font-poppins">
             {product.description || "No description available."}
           </p>
 
-          {/* Quantity */}
           {product.stock > 0 && (
             <div className="flex items-center gap-4 mt-8">
               <div className="flex items-center border rounded-md">
@@ -183,7 +177,6 @@ function ProductDetail() {
             </div>
           )}
 
-          {/* Buttons */}
           <div className="flex gap-4 mt-8">
             <button
               onClick={handleAddToCart}
@@ -206,57 +199,6 @@ function ProductDetail() {
 
         </div>
       </div>
-
-      {/* TAB SECTION */}
-      <div className="mt-20">
-
-        <div className="flex gap-8 border-b pb-4">
-          {["description", "details", "reviews"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`capitalize pb-2 ${
-                activeTab === tab
-                  ? "border-b-2 border-black font-semibold"
-                  : "text-gray-500"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
-        <div className="mt-8 text-gray-600 font-poppins leading-relaxed">
-
-          {activeTab === "description" && (
-            <p>
-              {product.description ||
-                "No detailed description available."}
-            </p>
-          )}
-
-          {activeTab === "details" && (
-            <div className="space-y-3">
-              <p>
-                <strong>Category:</strong>{" "}
-                {product.category}
-              </p>
-              <p>
-                <strong>Stock:</strong>{" "}
-                {product.stock}
-              </p>
-            </div>
-          )}
-
-          {activeTab === "reviews" && (
-            <p>
-              No reviews yet. Be the first to review this product.
-            </p>
-          )}
-
-        </div>
-      </div>
-
     </div>
   )
 }

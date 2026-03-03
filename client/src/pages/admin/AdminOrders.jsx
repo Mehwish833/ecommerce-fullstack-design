@@ -2,19 +2,23 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useAuth } from "../../context/AuthContext"
 
+const API = import.meta.env.VITE_API_URL
+
 function AdminOrders() {
 
   const { user } = useAuth()
   const [orders, setOrders] = useState([])
 
   useEffect(() => {
-    fetchOrders()
-  }, [])
+    if (user?.token) {
+      fetchOrders()
+    }
+  }, [user])
 
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:5000/api/orders",
+        `${API}/api/orders`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`
@@ -30,7 +34,7 @@ function AdminOrders() {
   const markAsDelivered = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/orders/${id}/deliver`,
+        `${API}/api/orders/${id}/deliver`,
         {},
         {
           headers: {
@@ -39,7 +43,7 @@ function AdminOrders() {
         }
       )
 
-      fetchOrders() // refresh list after update
+      fetchOrders()
 
     } catch (error) {
       console.error(error)
@@ -99,6 +103,7 @@ function AdminOrders() {
               Mark as Delivered
             </button>
           )}
+
         </div>
       ))}
 

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useAuth } from "../context/AuthContext"
 
+const API = import.meta.env.VITE_API_URL
+
 function Login() {
 
   const navigate = useNavigate()
@@ -20,12 +22,12 @@ function Login() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API}/api/auth/login`,
         { email, password }
       )
 
-      login(data) // save user in context + localStorage
-      navigate("/") // redirect home
+      login(data)
+      navigate("/")
 
     } catch (err) {
       setError(

@@ -4,6 +4,8 @@ import axios from "axios"
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../context/AuthContext"
 
+const API = import.meta.env.VITE_API_URL
+
 function Checkout() {
 
   const navigate = useNavigate()
@@ -24,8 +26,8 @@ function Checkout() {
       const tax = cartSubtotal * 0.05
       const total = cartSubtotal + shipping + tax
 
-      const { data } = await axios.post(
-        "http://localhost:5000/api/orders",
+      await axios.post(
+        `${API}/api/orders`,
         {
           orderItems: cartItems.map(item => ({
             product: item._id,

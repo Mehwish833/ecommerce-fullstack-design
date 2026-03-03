@@ -3,6 +3,8 @@ import axios from "axios"
 import { useAuth } from "../../context/AuthContext"
 import { useNavigate, useParams } from "react-router-dom"
 
+const API = import.meta.env.VITE_API_URL
+
 function AdminProductForm() {
 
   const { user } = useAuth()
@@ -31,7 +33,7 @@ function AdminProductForm() {
   const fetchProduct = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/products/${id}`
+        `${API}/api/products/${id}`
       )
 
       setFormData({
@@ -42,9 +44,8 @@ function AdminProductForm() {
         category: data.category
       })
 
-      // Show existing image preview
       if (data.image) {
-        setPreview(`http://localhost:5000${data.image}`)
+        setPreview(`${API}${data.image}`)
       }
 
     } catch (error) {
@@ -86,7 +87,7 @@ function AdminProductForm() {
 
       if (isEditMode) {
         await axios.put(
-          `http://localhost:5000/api/products/${id}`,
+          `${API}/api/products/${id}`,
           formDataObj,
           {
             headers: {
@@ -97,7 +98,7 @@ function AdminProductForm() {
         )
       } else {
         await axios.post(
-          "http://localhost:5000/api/products",
+          `${API}/api/products`,
           formDataObj,
           {
             headers: {
@@ -171,7 +172,6 @@ function AdminProductForm() {
           onChange={handleChange}
         />
 
-        {/* Image Upload */}
         <div>
           <input
             type="file"
@@ -181,7 +181,6 @@ function AdminProductForm() {
           />
         </div>
 
-        {/* Image Preview */}
         {preview && (
           <img
             src={preview}

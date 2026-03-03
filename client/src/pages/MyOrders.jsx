@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useAuth } from "../context/AuthContext"
 
+const API = import.meta.env.VITE_API_URL
+
 function MyOrders() {
 
   const { user } = useAuth()
@@ -10,10 +12,9 @@ function MyOrders() {
   useEffect(() => {
 
     const fetchOrders = async () => {
-
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/orders/myorders",
+          `${API}/api/orders/myorders`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`
@@ -26,10 +27,9 @@ function MyOrders() {
       } catch (error) {
         console.error(error)
       }
-
     }
 
-    if (user) fetchOrders()
+    if (user?.token) fetchOrders()
 
   }, [user])
 
