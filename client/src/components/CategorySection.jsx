@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 
+const API = import.meta.env.VITE_API_URL
+
 function CategorySection() {
 
   const [categories, setCategories] = useState([])
@@ -11,8 +13,7 @@ function CategorySection() {
 
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products")
-
+        const res = await axios.get(`${API}/api/products`)
         const products = res.data
 
         // 🔹 Group products by category
@@ -65,7 +66,7 @@ function CategorySection() {
         <div className="relative rounded-md overflow-hidden">
 
           <img
-            src="http://localhost:5000/uploads/category-banner.jpg"
+            src={`${API}/uploads/category-banner.jpg`}
             alt="Abaya Banner"
             className="w-full h-[250px] lg:h-full object-cover"
           />
@@ -98,7 +99,7 @@ function CategorySection() {
             >
 
               <img
-                src={`http://localhost:5000${cat.image}`}
+                src={`${API}${cat.image}`}
                 alt={cat.name}
                 className="h-24 mx-auto object-contain"
               />

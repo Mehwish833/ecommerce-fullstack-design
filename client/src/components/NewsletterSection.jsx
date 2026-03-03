@@ -1,6 +1,8 @@
 import { useState } from "react"
 import axios from "axios"
 
+const API = import.meta.env.VITE_API_URL
+
 function NewsletterSection() {
 
   const [email, setEmail] = useState("")
@@ -21,7 +23,7 @@ function NewsletterSection() {
       setMessage("")
 
       const res = await axios.post(
-        "http://localhost:5000/api/newsletter",
+        `${API}/api/newsletter`,
         { email }
       )
 

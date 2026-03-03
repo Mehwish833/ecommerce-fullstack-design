@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 
+const API = import.meta.env.VITE_API_URL
+
 function RecommendedSection() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -11,7 +13,7 @@ function RecommendedSection() {
     const fetchFeaturedProducts = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/products/featured"
+          `${API}/api/products/featured`
         )
         setProducts(data)
       } catch (err) {
@@ -65,7 +67,7 @@ function RecommendedSection() {
             className="bg-white border rounded-md p-4 hover:shadow-lg transition cursor-pointer block"
           >
             <img
-              src={`http://localhost:5000${product.image}`}
+              src={`${API}${product.image}`}
               alt={product.name}
               className="h-40 w-full object-contain"
             />

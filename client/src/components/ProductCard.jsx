@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom"
 import { FaStar, FaHeart } from "react-icons/fa"
 
+const API = import.meta.env.VITE_API_URL
+
 function ProductCard({
   _id,
   image,
@@ -45,7 +47,7 @@ function ProductCard({
         {/* Product Image */}
         <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
           <img
-            src={`http://localhost:5000${image}`}
+            src={`${API}${image}`}
             alt={name}
             className={`w-full h-full object-cover transition duration-500 ${
               stock === 0

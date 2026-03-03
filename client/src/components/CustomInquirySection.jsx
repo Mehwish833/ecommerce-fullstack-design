@@ -2,6 +2,8 @@ import bgImage from "../assets/images/cta-bg.jpg"
 import { useState } from "react"
 import axios from "axios"
 
+const API = import.meta.env.VITE_API_URL
+
 function CustomInquirySection() {
 
   const [formData, setFormData] = useState({
@@ -36,7 +38,7 @@ function CustomInquirySection() {
       setSuccess("")
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/inquiries",
+        `${API}/api/inquiries`,
         formData
       )
 
@@ -93,14 +95,12 @@ function CustomInquirySection() {
               Request Custom Design
             </h3>
 
-            {/* SUCCESS MESSAGE */}
             {success && (
               <div className="bg-green-100 text-green-600 text-sm p-2 rounded mb-3">
                 {success}
               </div>
             )}
 
-            {/* ERROR MESSAGE */}
             {error && (
               <div className="bg-red-100 text-red-600 text-sm p-2 rounded mb-3">
                 {error}

@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom"
 import ProductCard from "./ProductCard"
 import axios from "axios"
 
+const API = import.meta.env.VITE_API_URL
+
 function ProductGrid() {
 
   const location = useLocation()
@@ -37,7 +39,7 @@ function ProductGrid() {
         if (sortOption) params.append("sort", sortOption)
 
         const response = await axios.get(
-          `http://localhost:5000/api/products?${params.toString()}`
+          `${API}/api/products?${params.toString()}`
         )
 
         setProducts(response.data)
@@ -155,7 +157,7 @@ function ProductGrid() {
 
                 <div className="w-full md:w-1/3 aspect-square bg-gray-100 rounded-md overflow-hidden">
                   <img
-                    src={`http://localhost:5000${product.image}`}
+                    src={`${API}${product.image}`}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
